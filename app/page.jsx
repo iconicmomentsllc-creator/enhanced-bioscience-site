@@ -59,12 +59,26 @@ export default function HomePage() {
             fontSize: "16px",
             color: "#cfcfcf",
             lineHeight: "1.7",
+            marginBottom: "20px",
+          }}
+        >
+          Enhanced Bioscience gives members exclusive access to a broad range of
+          high-purity research compounds — far beyond just peptides. Our private
+          catalog includes advanced metabolic research materials, cognitive and
+          longevity-focused compounds, cosmetic-grade actives, premium health
+          supplements, natural extracts, parasite research agents, and many other
+          specialty research chemicals.
+        </p>
+        <p
+          style={{
+            fontSize: "16px",
+            color: "#cfcfcf",
+            lineHeight: "1.7",
             marginBottom: "25px",
           }}
         >
-          Enhanced Bioscience provides exclusive access to curated research materials
-          through a private membership model. Members gain visibility into compound
-          research catalogs for educational and research purposes only.
+          Members gain full visibility into everything we offer — strictly for
+          educational and laboratory research purposes only.
         </p>
 
         {/* MEMBERSHIP */}
@@ -78,50 +92,24 @@ export default function HomePage() {
           Membership: $10/month — monthly payments can be applied toward future research access.
         </p>
 
-        {/* BUTTONS */}
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "16px",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          <a href="/catalog">
-            <button
-              type="button"
-              style={{
-                padding: "16px 40px",
-                background: GOLD_GRADIENT_BUTTON,
-                color: "#000000",
-                fontWeight: "700",
-                border: "none",
-                borderRadius: "12px",
-                cursor: "pointer",
-                fontSize: "16px",
-                boxShadow: `0 0 22px ${goldRgba(0.4)}`,
-              }}
-            >
-              View Research Catalog
-            </button>
-          </a>
-          <a
-            href="/request-access"
+        <a href="/catalog">
+          <button
+            type="button"
             style={{
-              padding: "14px 28px",
+              padding: "16px 40px",
+              background: GOLD_GRADIENT_BUTTON,
+              color: "#000000",
+              fontWeight: "700",
+              border: "none",
               borderRadius: "12px",
-              border: `2px solid ${GOLD_ACCENT}`,
-              color: GOLD_ACCENT,
-              fontWeight: 700,
+              cursor: "pointer",
               fontSize: "16px",
-              textDecoration: "none",
-              display: "inline-block",
+              boxShadow: `0 0 22px ${goldRgba(0.4)}`,
             }}
           >
-            Request access
-          </a>
-        </div>
+            View Research Catalog
+          </button>
+        </a>
 
         {/* CONTACT */}
         <div style={{ marginTop: "60px" }}>
