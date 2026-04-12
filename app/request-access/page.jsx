@@ -107,10 +107,10 @@ export default function RequestAccessPage() {
               margin: "0 0 28px",
             }}
           >
-            We will reply with membership details and an access code as soon as we can.
+            We will reply with membership details and your access code as soon as we can. Then you can create your login below.
           </p>
           <Link
-            href="/catalog"
+            href="/register"
             style={{
               fontSize: "15px",
               color: GOLD_ACCENT,
@@ -118,8 +118,21 @@ export default function RequestAccessPage() {
               fontWeight: 600,
             }}
           >
-            Go to member login →
+            Create your login (needs access code) →
           </Link>
+          <p style={{ marginTop: "16px", marginBottom: 0 }}>
+            <Link
+              href="/catalog"
+              style={{
+                fontSize: "14px",
+                color: GOLD_MUTED,
+                textDecoration: "none",
+                fontWeight: 600,
+              }}
+            >
+              Already registered? Sign in →
+            </Link>
+          </p>
           <p style={{ marginTop: "24px", marginBottom: 0 }}>
             <Link
               href="/"

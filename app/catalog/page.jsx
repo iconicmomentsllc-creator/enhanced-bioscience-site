@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 import { BrandLogo } from "../../components/BrandLogo";
 import {
   GOLD_ACCENT,
@@ -12,14 +13,19 @@ import {
   goldRgba,
 } from "../../lib/goldTheme";
 
-export default function CatalogAccessPage() {
-  const [code, setCode] = useState("");
+export default function CatalogLoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleAccess = async () => {
-    if (!code.trim()) {
-      setError("Please enter your access code.");
+  const handleSignIn = async () => {
+    if (!email.trim()) {
+      setError("Please enter your email.");
+      return;
+    }
+    if (!password) {
+      setError("Please enter your password.");
       return;
     }
 
@@ -27,28 +33,23 @@ export default function CatalogAccessPage() {
     setError("");
 
     try {
-      const res = await fetch("/api/auth", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ code: code.trim() }),
-        cache: "no-store",
+      const res = await signIn("credentials", {
+        email: email.trim().toLowerCase(),
+        password,
+        redirect: false,
       });
 
-      const text = await res.text();
-      let data = {};
-      try {
-        data = text ? JSON.parse(text) : {};
-      } catch {
-        setError("Unable to reach the server. If you are viewing a static export, run the app with `npm run dev` or `npm start`.");
+      if (res?.error) {
+        setError("Invalid email or password.");
         return;
       }
 
-      if (data.success) {
+      if (res?.ok) {
         window.location.href = "/catalog/private";
         return;
       }
 
-      setError(data.message || "Invalid access code.");
+      setError("Could not sign in. Please try again.");
     } catch {
       setError("Network error. Please try again.");
     } finally {
@@ -108,7 +109,7 @@ export default function CatalogAccessPage() {
             backgroundClip: "text",
           }}
         >
-          Secure access
+          Sign in
         </h1>
 
         <p
@@ -119,11 +120,11 @@ export default function CatalogAccessPage() {
             margin: "0 0 28px",
           }}
         >
-          Enter the access code provided with your membership to view the research catalog.
+          Sign in with the email and password you created after you received your access code.
         </p>
 
         <label
-          htmlFor="access-code"
+          htmlFor="login-email"
           style={{
             display: "block",
             textAlign: "left",
@@ -133,17 +134,54 @@ export default function CatalogAccessPage() {
             fontWeight: 600,
           }}
         >
-          Access code
+          Email
         </label>
         <input
-          id="access-code"
+          id="login-email"
+          type="email"
+          name="email"
+          autoComplete="email"
+          placeholder="you@example.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && !loading && handleSignIn()}
+          disabled={loading}
+          style={{
+            boxSizing: "border-box",
+            padding: "14px 16px",
+            width: "100%",
+            marginBottom: "16px",
+            borderRadius: "12px",
+            border: `1px solid ${goldRgba(0.38)}`,
+            background: "rgba(0, 0, 0, 0.35)",
+            color: "#f5f5f5",
+            fontSize: "16px",
+            outline: "none",
+          }}
+        />
+
+        <label
+          htmlFor="login-password"
+          style={{
+            display: "block",
+            textAlign: "left",
+            fontSize: "13px",
+            color: GOLD_MUTED,
+            marginBottom: "8px",
+            fontWeight: 600,
+          }}
+        >
+          Password
+        </label>
+        <input
+          id="login-password"
           type="password"
-          name="access-code"
-          autoComplete="off"
-          placeholder="Enter code"
-          value={code}
-          onChange={(e) => setCode(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && !loading && handleAccess()}
+          name="password"
+          autoComplete="current-password"
+          placeholder="Your password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          onKeyDown={(e) => e.key === "Enter" && !loading && handleSignIn()}
           disabled={loading}
           style={{
             boxSizing: "border-box",
@@ -161,7 +199,7 @@ export default function CatalogAccessPage() {
 
         <button
           type="button"
-          onClick={handleAccess}
+          onClick={handleSignIn}
           disabled={loading}
           style={{
             width: "100%",
@@ -177,7 +215,7 @@ export default function CatalogAccessPage() {
             boxShadow: loading ? "none" : `0 0 22px ${goldRgba(0.35)}`,
           }}
         >
-          {loading ? "Verifying…" : "Continue"}
+          {loading ? "Signing in…" : "Continue"}
         </button>
 
         {error ? (
@@ -195,7 +233,7 @@ export default function CatalogAccessPage() {
         ) : null}
 
         <p style={{ marginTop: "22px", marginBottom: "8px", fontSize: "14px", color: GOLD_MUTED }}>
-          Don&apos;t have a code?{" "}
+          New to membership?{" "}
           <Link
             href="/request-access"
             style={{
@@ -205,6 +243,20 @@ export default function CatalogAccessPage() {
             }}
           >
             Request access
+          </Link>
+        </p>
+
+        <p style={{ marginTop: "8px", marginBottom: "8px", fontSize: "14px", color: GOLD_MUTED }}>
+          Have your access code?{" "}
+          <Link
+            href="/register"
+            style={{
+              color: GOLD_ACCENT,
+              textDecoration: "none",
+              fontWeight: 600,
+            }}
+          >
+            Create your login
           </Link>
         </p>
 

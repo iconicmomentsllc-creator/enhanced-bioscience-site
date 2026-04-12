@@ -1,6 +1,7 @@
 "use client";
 
 import { BrandLogo } from "../../../components/BrandLogo";
+import { SignOutButton } from "../../../components/SignOutButton";
 import { CATALOG_SECTIONS } from "../../../lib/catalogSections";
 import {
   GOLD_ACCENT,
@@ -153,7 +154,10 @@ export default function PrivateCatalogPage() {
           </p>
 
           <p style={{ fontSize: "24px", marginBottom: "10px" }}>832-883-1720</p>
-          <p style={{ fontSize: "18px", color: GOLD_ACCENT }}>enhancedbioscience@gmail.com</p>
+          <p style={{ fontSize: "18px", color: GOLD_ACCENT, marginBottom: "8px" }}>
+            enhancedbioscience@gmail.com
+          </p>
+          <SignOutButton />
         </div>
       </div>
     </main>

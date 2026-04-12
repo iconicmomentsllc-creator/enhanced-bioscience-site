@@ -1,14 +1,10 @@
-import { cookies } from "next/headers";
+import { getServerSession } from "next-auth/next";
 import { redirect } from "next/navigation";
-import {
-  MEMBER_SESSION_COOKIE,
-  isValidMemberSessionValue,
-} from "../../../lib/memberSession";
+import { authOptions } from "../../../lib/authOptions";
 
-export default function PrivateCatalogLayout({ children }) {
-  const jar = cookies();
-  const token = jar.get(MEMBER_SESSION_COOKIE)?.value;
-  if (!isValidMemberSessionValue(token)) {
+export default async function PrivateCatalogLayout({ children }) {
+  const session = await getServerSession(authOptions);
+  if (!session?.user) {
     redirect("/catalog");
   }
   return children;
