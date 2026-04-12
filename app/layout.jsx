@@ -1,15 +1,19 @@
+import { getServerSession } from "next-auth";
 import { Providers } from "../components/Providers";
+import { authOptions } from "../lib/authOptions";
 
 export const metadata = {
   title: "Enhanced Bioscience",
   description: "Private research membership portal",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const session = await getServerSession(authOptions);
+
   return (
     <html lang="en">
       <body>
-        <Providers>{children}</Providers>
+        <Providers session={session}>{children}</Providers>
       </body>
     </html>
   );
