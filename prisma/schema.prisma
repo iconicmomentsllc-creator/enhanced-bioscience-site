@@ -8,9 +8,47 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
+  id           String               @id @default(cuid())
+  email        String               @unique
   passwordHash String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  createdAt    DateTime             @default(now())
+  updatedAt    DateTime             @updatedAt
+  evaluations  EvaluationRequest[]
+}
+
+model EvaluationRequest {
+  id                    String   @id @default(cuid())
+  userId                String
+  user                  User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  idempotencyKey        String   @unique
+  publicRef             String   @unique
+  encounterNumber       String?
+  encounterId           String?
+  orderId               String?
+  orderNumber           String?
+  productId             String?
+  packageId             String?
+  encounterTypeId       String?
+  shippingState         String?
+  customerStatus        String   @default("received")
+  trackingNumber        String?
+  paymentState          String   @default("not_required")
+  gatewayTransactionId  String?
+  amountCents           Int?
+  currency              String   @default("usd")
+  billingEnabled        Boolean  @default(false)
+  isSandbox             Boolean  @default(true)
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([userId])
+  @@index([encounterId])
+  @@index([encounterNumber])
+}
+
+model WebhookDelivery {
+  id         String   @id @default(cuid())
+  webhookId  String   @unique
+  eventType  String
+  createdAt  DateTime @default(now())
 }

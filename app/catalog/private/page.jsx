@@ -1,10 +1,12 @@
 "use client";
 
+import Link from "next/link";
 import { BrandLogo } from "../../../components/BrandLogo";
 import { SignOutButton } from "../../../components/SignOutButton";
 import { CATALOG_SECTIONS } from "../../../lib/catalogSections";
 import {
   GOLD_ACCENT,
+  GOLD_GRADIENT_BUTTON,
   GOLD_GRADIENT_TEXT,
   GOLD_HEADING,
   GOLD_MUTED,
@@ -55,6 +57,64 @@ export default function PrivateCatalogPage() {
           <p style={{ fontSize: "15px", color: "#9a9a9a", maxWidth: "640px", margin: "0 auto", lineHeight: 1.6 }}>
             Full reference list of materials. Research use only; availability by private inquiry.
           </p>
+
+          <div
+            style={{
+              maxWidth: "560px",
+              margin: "28px auto 0",
+              padding: "22px 24px",
+              borderRadius: "16px",
+              border: `1px solid ${goldRgba(0.24)}`,
+              background: "linear-gradient(145deg, rgba(26, 22, 14, 0.95), rgba(12, 12, 12, 0.98))",
+            }}
+          >
+            <p
+              style={{
+                margin: "0 0 8px",
+                color: GOLD_HEADING,
+                fontWeight: 700,
+                fontSize: "16px",
+              }}
+            >
+              Request an evaluation
+            </p>
+            <p
+              style={{
+                margin: "0 0 16px",
+                color: "#a8a8a8",
+                fontSize: "14px",
+                lineHeight: 1.55,
+              }}
+            >
+              Members can request a private evaluation for eligible products after we confirm shipping to your state.
+            </p>
+            <Link href="/catalog/private/request" style={{ textDecoration: "none" }}>
+              <button
+                type="button"
+                style={{
+                  padding: "12px 22px",
+                  background: GOLD_GRADIENT_BUTTON,
+                  color: "#000000",
+                  border: "none",
+                  borderRadius: "12px",
+                  fontWeight: 700,
+                  fontSize: "15px",
+                  cursor: "pointer",
+                  boxShadow: `0 0 18px ${goldRgba(0.32)}`,
+                }}
+              >
+                Start request
+              </button>
+            </Link>
+            <p style={{ margin: "14px 0 0" }}>
+              <Link
+                href="/catalog/private/requests"
+                style={{ color: GOLD_ACCENT, fontWeight: 600, textDecoration: "none", fontSize: "14px" }}
+              >
+                View your requests
+              </Link>
+            </p>
+          </div>
         </div>
 
         {CATALOG_SECTIONS.map((section, sIdx) => (

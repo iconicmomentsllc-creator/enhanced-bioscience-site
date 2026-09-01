@@ -4,6 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "test": "node --test tests/webhook-signature.test.js tests/status-and-payment.test.js tests/fail-closed.test.js",
+    "prescriberx:webhook": "node scripts/setup-prescriberx-webhook.mjs",
     "migrate:deploy": "prisma migrate deploy",
     "start": "next start",
     "postinstall": "prisma generate"
